@@ -28,7 +28,7 @@
     //裸函数
     var Ctor = function () { };
 
-    //为下划线对象创建一个安全索引
+    //为下划线对象创建一个安全索引,（下划线在此定义）
     var _ = function (obj) {
         if (obj instanceof _) return obj;
         if (!(this instanceof _)) return new _(obj);
@@ -103,6 +103,15 @@
             }
             return obj;
         }
+    }
+
+    var baseCreate = function (prototype) {
+        if (!_.isObject(prototype)) return {};
+        if (navtiveCreate) return navtiveCreate(prototype);
+        Ctor.prototype = prototype;
+        var result = new Ctor();
+        Ctor.prototype = null;
+        return result;
     }
 
 
