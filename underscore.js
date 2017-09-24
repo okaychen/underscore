@@ -105,6 +105,7 @@
         }
     }
 
+    //用于创建从另一个对象继承新对象的内部函数
     var baseCreate = function (prototype) {
         if (!_.isObject(prototype)) return {};
         if (navtiveCreate) return navtiveCreate(prototype);
@@ -112,8 +113,7 @@
         var result = new Ctor();
         Ctor.prototype = null;
         return result;
-    }
-
+    };
     var property  = function (key) {
         return function(obj) {
             return obj == null ? void 0 : obj[key];
