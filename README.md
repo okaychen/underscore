@@ -2,7 +2,7 @@
 
 ## underscore源码学习计划
 
-![Alt text](img/underscore.png)
+![Alt text](docs/images/underscore.png)
 
 我把这次underscore源码学习计划分为两大部分
 
