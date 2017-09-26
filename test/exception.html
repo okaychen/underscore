@@ -19,24 +19,51 @@
 <body>
 
     <script>
+        /*         function parseAge(age) {
+                            if (!_.isString(age)) throw new Error("Expecting a string");
+                            var a;
+                            console.log("Attempting to parse an age");
+                            a = parseInt(age, 10);
+                            if (_.isNaN(a)) {
+                                console.log(['could not parse age:', age].join(' '));
+                                a = 0;
+                            }
+                            return a;
+                        }
+                        parseAge("20");
+                        //(console)Attempting to parse an age
+                        parseAge("okaychen");
+                        //(console)Attempting to parse an age
+                        //(console)Could not parse age:okaychen
+                        parseAge(20);
+                        //Error:Expecting a string  注释掉这一行，否则报错之后后面的测试代码就不会执行了 */
+
+        // 改进parseAge函数
+        function fail(thing) {
+            throw new Error(thing)
+        }
+
+        function warn(thing) {
+            console.log(["WARNING:", thing].join(' '));
+        }
+
+        function note(thing) {
+            console.log(["NOTE:", thing].join(' '));
+        }
+
         function parseAge(age) {
-            if (!_.isString(age)) throw new Error("Expecting a string");
+            if (!_.isString(age)) fail("Expecting a string");
             var a;
-            console.log("Attempting to parse an age");
+            note("Attempting to parse an age");
             a = parseInt(age, 10);
             if (_.isNaN(a)) {
-                console.log(['could not parse age:', age].join(' '));
+                warn(["Could not parse age:"], age).join(' ');
                 a = 0;
             }
-            return a;
+            return 0;
         }
-        parseAge("20"); 
-        //(console)Attempting to parse an age
-        parseAge("okaychen"); 
-        //(console)Attempting to parse an age
-        //(console)Could not parse age:okaychen
-        parseAge(20);        
-        //Error:Expecting a string  注释掉这一行，否则报错之后后面的测试代码就不会执行了
+
+        parseAge('pkaychne');
     </script>
 
 </body>
