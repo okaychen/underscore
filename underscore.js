@@ -21,12 +21,12 @@
     //将内置对象原型中常用的方法缓存在局部变量中
     var
         navtiveIsArray = Array.isArray,
-        navtiveKeys = Object.keys,  //Object.keys() 方法会返回一个由一个给定对象的自身可枚举属性组成的数组，数组中属性名的排列顺序和使用 for...in 循环遍历该对象时返回的顺序一致 
-        navtiveBind = FuncProto.bind,  //函数柯里化
+        navtiveKeys = Object.keys, //Object.keys() 方法会返回一个由一个给定对象的自身可枚举属性组成的数组，数组中属性名的排列顺序和使用 for...in 循环遍历该对象时返回的顺序一致 
+        navtiveBind = FuncProto.bind, //函数柯里化
         navtiveCreate = Object.create;
 
     //裸函数
-    var Ctor = function () { };
+    var Ctor = function () {};
 
     //为下划线对象创建一个安全索引,（下划线在此定义）
     var _ = function (obj) {
@@ -38,7 +38,7 @@
     //针对不同的宿主对象，将underscore存放在不同的对象中
     if (typeof exports !== 'undefined') {
         if (typeof module !== 'undefined' && module.exports) {
-            exports = module.exports = _;  //Node.js环境中/好熟悉的赶脚啊，哈哈
+            exports = module.exports = _; //Node.js环境中/好熟悉的赶脚啊，哈哈
         }
         exports._ = _;
     } else {
@@ -52,18 +52,22 @@
     var optimizeCb = function (func, context, argCount) {
         if (context === void 0) return func;
         switch (argCount == null ? 3 : argCount) {
-            case 1: return function (value) {
-                return func.call(context, value);
-            };
-            case 2: return function (value, other) {
-                return func.call(context, value, other);
-            };
-            case 3: return function (value, index, collection) {
-                return func.call(context, value, index, collection);
-            };
-            case 4: return function (accumulator, value, index, collection) {
-                return func.call(context, accumulator, value, index, collection);
-            };
+            case 1:
+                return function (value) {
+                    return func.call(context, value);
+                };
+            case 2:
+                return function (value, other) {
+                    return func.call(context, value, other);
+                };
+            case 3:
+                return function (value, index, collection) {
+                    return func.call(context, value, index, collection);
+                };
+            case 4:
+                return function (accumulator, value, index, collection) {
+                    return func.call(context, accumulator, value, index, collection);
+                };
         }
         return function () {
             return func.apply(context, arguments);
@@ -114,13 +118,21 @@
         Ctor.prototype = null;
         return result;
     };
-    var property  = function (key) {
-        return function(obj) {
+    var property = function (key) {
+        return function (obj) {
             return obj == null ? void 0 : obj[key];
         }
     }
 
+    // 为收集方法做准备，应作为数组或对象的迭代
+    var MAX_ARRAY_INDEX = Math.pow(2, 53) - 1; // 安全整数
+    var getLength = property('length');
+    var isArrayLink = function (collection) {
+        var length = getLength(collection);
+        return typeof length == 'number' && length >= 0 && length <= MAX_ARRAY_INDEX;
+    }
 
+    // Collection functions
 
 
 }.call(this));
