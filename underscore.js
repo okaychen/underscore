@@ -125,14 +125,28 @@
     }
 
     // 为收集方法做准备，应作为数组或对象的迭代
-    var MAX_ARRAY_INDEX = Math.pow(2, 53) - 1; // 安全整数
+    var MAX_ARRAY_INDEX = Math.pow(2, 53) - 1;
     var getLength = property('length');
     var isArrayLink = function (collection) {
         var length = getLength(collection);
         return typeof length == 'number' && length >= 0 && length <= MAX_ARRAY_INDEX;
     }
 
-    // Collection functions
-
+    // _.each方法
+    _.each = _.forEach = function (obj, iteratee, context) {
+        iteratee = optimizeCb(iteratee, context);
+        var i, length;
+        if (isArrayLink(obj)) {
+            for (i = 0, length = obj.length; i < length; i++) {
+                iteratee(obj[i], i, obj);
+            }
+        } else {
+            var keys = _.keys(obj);
+            for (i = 0, length = keys.length; i < length; i++) {
+                iteratee(obj[keys[i]], keys[i], obj)
+            }
+        }
+        return obj;
+    }
 
 }.call(this));
