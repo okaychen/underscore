@@ -35,8 +35,8 @@ _.each({one: 1, two: 2, three: 3}, alert);
  ```
 注意：集合函数能在数组，对象，和类数组对象，比如arguments, NodeList和类似的数据类型上正常工作。 但是它通过鸭子类型工作，所以要避免传递带有一个数值 length 属性的对象。每个循环不能被破坏 - 打破， 使用_.find代替，这也是很好的注意。  
  
- 2)map
- _.map(list, iteratee, [context]) Alias: collect 
+2) map
+_.map(list, iteratee, [context]) Alias: collect 
 通过对list里的每个元素调用转换函数(iteratee迭代器)生成一个与之相对应的数组。iteratee传递三个参数：value，然后是迭代 index(或 key 愚人码头注：如果list是个JavaScript对象是，这个参数就是key)，最后一个是引用指向整个list。
 ```
 _.map([1, 2, 3], function(num){ return num * 3; });
