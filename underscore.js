@@ -5,7 +5,7 @@
 
 
 //整个函数在一个闭包中，避免全局变量污染。通过传入this，来改变函数的作用域
-(function () {
+(function() {
     //创建一个root对象，在浏览器中就是window，在服务器(如node)中就是'exports'
     var root = this;
 
@@ -26,10 +26,10 @@
         navtiveCreate = Object.create;
 
     //裸函数
-    var Ctor = function () {};
+    var Ctor = function() {};
 
     //为下划线对象创建一个安全索引,（下划线在此定义）
-    var _ = function (obj) {
+    var _ = function(obj) {
         if (obj instanceof _) return obj;
         if (!(this instanceof _)) return new _(obj);
         this._wrapped = obj;
@@ -49,27 +49,27 @@
     _.VERSION = '1.8.3';
 
     //核心函数1，对于参数小于等于4的情况分类处理：
-    var optimizeCb = function (func, context, argCount) {
+    var optimizeCb = function(func, context, argCount) {
         if (context === void 0) return func;
         switch (argCount == null ? 3 : argCount) {
             case 1:
-                return function (value) {
+                return function(value) {
                     return func.call(context, value);
                 };
             case 2:
-                return function (value, other) {
+                return function(value, other) {
                     return func.call(context, value, other);
                 };
             case 3:
-                return function (value, index, collection) {
+                return function(value, index, collection) {
                     return func.call(context, value, index, collection);
                 };
             case 4:
-                return function (accumulator, value, index, collection) {
+                return function(accumulator, value, index, collection) {
                     return func.call(context, accumulator, value, index, collection);
                 };
         }
-        return function () {
+        return function() {
             return func.apply(context, arguments);
         }
     }
@@ -81,19 +81,19 @@
      * 默认返回一个获取对象属性的函数
      * 
      */
-    var cb = function (value, context, argCount) {
+    var cb = function(value, context, argCount) {
         if (value == null) return _.identity;
         if (_.inFunction(value)) return optimizeCb(value, context, argCount);
         if (_.isObject(value)) return _.matcher(value);
         return _.prototype(value);
     }
-    _.iteratee = function (value, context) {
+    _.iteratee = function(value, context) {
         return cb(value, context, Infinity);
     }
 
     // 创建一个内部函数分配
-    var createAssigner = function (keysFunc, undefinedOnly) {
-        return function (obj) {
+    var createAssigner = function(keysFunc, undefinedOnly) {
+        return function(obj) {
             var length = arguments.length;
             if (length < 2 || obj == null) return obj;
             for (var index = 1; index < length; index++) {
@@ -110,7 +110,7 @@
     }
 
     //用于创建从另一个对象继承新对象的内部函数
-    var baseCreate = function (prototype) {
+    var baseCreate = function(prototype) {
         if (!_.isObject(prototype)) return {};
         if (navtiveCreate) return navtiveCreate(prototype);
         Ctor.prototype = prototype;
@@ -118,8 +118,8 @@
         Ctor.prototype = null;
         return result;
     };
-    var property = function (key) {
-        return function (obj) {
+    var property = function(key) {
+        return function(obj) {
             return obj == null ? void 0 : obj[key];
         }
     }
@@ -127,13 +127,13 @@
     // 为收集方法做准备，应作为数组或对象的迭代
     var MAX_ARRAY_INDEX = Math.pow(2, 53) - 1;
     var getLength = property('length');
-    var isArrayLink = function (collection) {
+    var isArrayLink = function(collection) {
         var length = getLength(collection);
         return typeof length == 'number' && length >= 0 && length <= MAX_ARRAY_INDEX;
     }
 
     // _.each方法
-    _.each = _.forEach = function (obj, iteratee, context) {
+    _.each = _.forEach = function(obj, iteratee, context) {
         iteratee = optimizeCb(iteratee, context);
         var i, length;
         if (isArrayLink(obj)) {
